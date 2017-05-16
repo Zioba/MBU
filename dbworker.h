@@ -3,6 +3,8 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlTableModel>
+#include <QSqlRecord>
+#include <QTableView>
 
 #include <QString>
 
@@ -15,6 +17,8 @@ public:
 
     bool getConnectionStatus();
     bool makeNote( int type, QString date, int x, QString package, int status );
+    QSqlDatabase getDb() const;
+    QSqlTableModel *getTable(QTableView *table, QString tableName);
 private:
     bool connectionStatus;
     QSqlDatabase db;

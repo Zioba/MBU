@@ -10,8 +10,6 @@
 #include <QSqlQuery>
 #include <QSqlTableModel>
 #include <QSqlError>
-#include <QSqlRecord>
-#include "logger.h"
 #include "converter.h"
 #include "dbworker.h"
 
@@ -42,7 +40,6 @@ private slots:
 
     QString getCurrentDateAndTime();
     QString assistParser( QString, int & );
-    void setRussianColomnIDs( QString );
 
 private:
     const int X_POSITION_FRAME=900;
@@ -56,15 +53,10 @@ private:
 
     Ui::MainWindow *ui;
 
-    QUdpSocket     udpSocket;
-    QSqlDatabase   db;
+    QUdpSocket udpSocket;
     DbWorker dbConnect;
-    QSqlTableModel *model;
-
     QHostAddress myIp;
     QHostAddress targetIp;
-
-    Logger    *logger;
     Converter *converter;
 };
 

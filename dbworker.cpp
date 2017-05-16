@@ -50,3 +50,40 @@ bool DbWorker::makeNote( int type, QString date, int x, QString package, int sta
     }
     return false;
 }
+
+QSqlTableModel *DbWorker::getTable(QTableView *table, QString tableName) {
+    QSqlTableModel *model = new QSqlTableModel(table, db);
+    model->setTable(tableName);
+    model->select();
+    QSqlQuery query = QSqlQuery(db);
+    query.prepare( "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '"+tableName+"';" );
+    query.exec();
+    if ( query.next() ){
+        for ( int i = 0; i < query.size(); i++) {
+            QSqlRecord rec;
+            rec = query.record();
+            QSqlQuery query2 = QSqlQuery(db);
+            QString s = "SELECT description FROM pg_description INNER JOIN ";
+            query2.prepare( s +
+                            "(SELECT oid FROM pg_class WHERE relname ='" +
+                            tableName +
+                            "') as table_oid " +
+                            "ON pg_description.objoid = table_oid.oid " +
+                            "AND pg_description.objsubid IN " +
+                            "(SELECT attnum FROM pg_attribute WHERE attname = '" +
+                            query.value(0).toString() +
+                            "' AND pg_attribute.attrelid = table_oid.oid );" );
+            query2.exec();
+            if (query2.next()) {
+                model->setHeaderData(i, Qt::Horizontal, query2.value(0).toString());
+            }
+            query.next();
+        }
+    }
+    return model;
+}
+
+QSqlDatabase DbWorker::getDb() const
+{
+    return db;
+}

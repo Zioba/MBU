@@ -17,7 +17,6 @@ SOURCES += main.cpp\
         deldialog.cpp \
         mainwindow.cpp \
     ipdialog.cpp \
-    logger.cpp \
     converter.cpp \
     parser.cpp \
     dbworker.cpp
@@ -25,7 +24,6 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h\
     deldialog.h \
     ipdialog.h \
-    logger.h \
     converter.h \
     parser.h \
     dbworker.h
