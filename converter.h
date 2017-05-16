@@ -10,8 +10,8 @@ class Converter
 {
 public:
     Converter();
-    QByteArray encode( QStringList ); //закодировать датаграмму
-    QStringList decode( QByteArray ); //раскодировать датаграмму
+    QByteArray encodeDatagram( QStringList ); //закодировать датаграмму
+    QStringList decodeDatagram( QByteArray ); //раскодировать датаграмму
     QByteArray generateReceiptResponse( QStringList ); //генерация датаграммы квитанции
 
 private:

@@ -38,26 +38,22 @@ private slots:
     void parsingCoord ( QString, QString );
     void parsingRocket( QString, QString );
 
-    QString getCurrentDateAndTime();
-    QString assistParser( QString, int & );
-
 private:
     const int X_POSITION_FRAME=900;
     const int Y_POSITION_FRAME=0;
     const int LISTERNING_PORT=5824;
-    const int DB_PORT=5432;
     int unicumMessageId = 1;
-
     const QString myPort = "5824";
     const QString targetPort = "5825";
-
     Ui::MainWindow *ui;
-
     QUdpSocket udpSocket;
     DbWorker dbConnect;
     QHostAddress myIp;
     QHostAddress targetIp;
     Converter *converter;
+
+    QString getCurrentDateAndTime();
+    QString assistParser( QString, int & );
 };
 
 #endif // MAINWINDOW_H

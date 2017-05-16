@@ -51,12 +51,12 @@ bool DbWorker::makeNote( int type, QString date, int x, QString package, int sta
     return false;
 }
 
-QSqlTableModel *DbWorker::getTable(QTableView *table, QString tableName) {
+QSqlTableModel *DbWorker::getTable(QTableView *table, QString tableName, QString shortName) {
     QSqlTableModel *model = new QSqlTableModel(table, db);
     model->setTable(tableName);
     model->select();
     QSqlQuery query = QSqlQuery(db);
-    query.prepare( "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '"+tableName+"';" );
+    query.prepare( "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '"+shortName+"';" );
     query.exec();
     if ( query.next() ){
         for ( int i = 0; i < query.size(); i++) {
@@ -66,7 +66,7 @@ QSqlTableModel *DbWorker::getTable(QTableView *table, QString tableName) {
             QString s = "SELECT description FROM pg_description INNER JOIN ";
             query2.prepare( s +
                             "(SELECT oid FROM pg_class WHERE relname ='" +
-                            tableName +
+                            shortName +
                             "') as table_oid " +
                             "ON pg_description.objoid = table_oid.oid " +
                             "AND pg_description.objsubid IN " +
@@ -83,7 +83,31 @@ QSqlTableModel *DbWorker::getTable(QTableView *table, QString tableName) {
     return model;
 }
 
-QSqlDatabase DbWorker::getDb() const
+bool DbWorker::writeCoordinats(QString x, QString y, QString z, QString direction,
+                               QString time, QString object)
 {
-    return db;
+    QSqlQuery query = QSqlQuery(db);
+    QString queryString;
+    queryString = "UPDATE own_forces.combatobject_location SET obj_location=ST_MakePoint ("+x+","+y+","+z+"), direction='"+
+            direction+"', date_edit='"+ time + "' WHERE combat_hierarchy='"+object+"';";
+    if (query.exec(queryString)) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+bool DbWorker::writeRocket(QString x,QString time, QString object)
+{
+    QSqlQuery query = QSqlQuery(db);
+    QString queryString;
+    queryString = "UPDATE own_forces.rocket SET type_tid='"+ x +
+            "', date_edit='"+ time + "' WHERE combatobjectid='"+object+"';";
+    if ( query.exec(queryString) ) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }

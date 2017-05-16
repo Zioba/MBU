@@ -5,7 +5,7 @@ Converter::Converter()
 
 }
 
-QByteArray Converter::encode( QStringList list )
+QByteArray Converter::encodeDatagram( QStringList list )
 {
     QByteArray datagram;
     datagram.append( convertIpBinary( list.at( 0 ) ) );      //адрес источника
@@ -24,7 +24,7 @@ QByteArray Converter::encode( QStringList list )
     return datagram;
 }
 
-QStringList Converter::decode( QByteArray datagram )
+QStringList Converter::decodeDatagram( QByteArray datagram )
 {
     QStringList list;
     QString source( datagram );
