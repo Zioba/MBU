@@ -113,9 +113,23 @@
      <x>0</x>
      <y>0</y>
      <width>900</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>меню</string>
+    </property>
+    <widget class="QMenu" name="commandMenu">
+     <property name="title">
+      <string>Комманды/Сигналы</string>
+     </property>
+     <addaction name="showCommandTableAction"/>
+     <addaction name="sendCommand"/>
+    </widget>
+    <addaction name="commandMenu"/>
+   </widget>
+   <addaction name="menu"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -126,6 +140,16 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="showCommandTableAction">
+   <property name="text">
+    <string>Показать таблицу</string>
+   </property>
+  </action>
+  <action name="sendCommand">
+   <property name="text">
+    <string>отправить комманду</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

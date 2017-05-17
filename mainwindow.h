@@ -38,6 +38,8 @@ private slots:
     void parsingCoord ( QString, QString );
     void parsingRocket( QString, QString );
 
+    void on_showCommandTableAction_triggered();
+    void on_sendCommand_triggered();
 private:
     const int X_POSITION_FRAME=900;
     const int Y_POSITION_FRAME=0;
@@ -54,6 +56,7 @@ private:
 
     QString getCurrentDateAndTime();
     QString assistParser( QString, int & );
+    QString makeDatagramCommand(QString q);
 };
 
 #endif // MAINWINDOW_H

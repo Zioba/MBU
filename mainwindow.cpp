@@ -108,11 +108,135 @@ void MainWindow::on_logTableBut_3_clicked()
     makeLogNote( "Загружены данные log table" );
 }
 
+void MainWindow::on_showCommandTableAction_triggered()
+{
+    /*QString trash;
+    DelDialog dia;
+    if ( dia.exec() ) {
+        trash = dia.value();
+    }
+    QString data = makeDatagramCoord( trash );
+    if ( data == "error" ) {
+        makeLogNote( "ошибка создания датаграммы" );
+        QMessageBox::information(this, "ОШИБКА", "такой записи не существует!");
+        return;
+    }
+    QStringList list;
+    list << myIp.toString()
+         << targetIp.toString()
+         << "17"
+         << QString::number( data.length() + 224 )
+         << myPort
+         << targetPort
+         << QString::number( data.length() )
+         << ""
+         << "0001"
+         << QString::number( unicumMessageId )
+         << "1"
+         << "1"
+         << data;
+    unicumMessageId++;
+    QByteArray datagram = converter->encode( list );
+    qDebug() << targetPort.toLong( Q_NULLPTR, 10 );
+    udpSocket.writeDatagram( datagram, targetIp, targetPort.toLong( Q_NULLPTR, 10) );
+    makeLogNote( "отправлен пакет" );
+    QMessageBox::information(this, "УСПЕХ", "Пакет отправлен успешно");
+    bool x = logger->makeNote( 1, getCurrentDateAndTime(), 1, data, 2);
+    if ( x ) {
+        makeLogNote( "запись действия добавлена в БД" );
+    }
+        else {
+        makeLogNote( "ошиба записи действия в БД" );
+    }*/
+    QSqlTableModel *model = dbConnect.getTable(ui->tableView, "orders_alerts.orders_alerts_info", "orders_alerts_info");
+    ui->tableView->setModel( model );
+    for ( int i = 0; i < model->columnCount(); i++ ) {
+        ui->tableView->horizontalHeader()->setSectionResizeMode( i , QHeaderView::ResizeToContents);
+    }
+    makeLogNote( "Загружены данные orders_alerts_info" );
+}
+
+void MainWindow::on_sendCommand_triggered()
+{
+    QString trash;
+    DelDialog dia;
+    if ( dia.exec() ) {
+        trash = dia.value();
+    }
+    /*QString data = makeDatagramCoord( trash );
+    if ( data == "error" ) {
+        makeLogNote( "ошибка создания датаграммы" );
+        QMessageBox::information(this, "ОШИБКА", "такой записи не существует!");
+        return;
+    }
+    QStringList list;
+    list << myIp.toString()
+         << targetIp.toString()
+         << "17"
+         << QString::number( data.length() + 224 )
+         << myPort
+         << targetPort
+         << QString::number( data.length() )
+         << ""
+         << "0001"
+         << QString::number( unicumMessageId )
+         << "1"
+         << "1"
+         << data;
+    unicumMessageId++;
+    QByteArray datagram = converter->encode( list );
+    qDebug() << targetPort.toLong( Q_NULLPTR, 10 );
+    udpSocket.writeDatagram( datagram, targetIp, targetPort.toLong( Q_NULLPTR, 10) );
+    makeLogNote( "отправлен пакет" );
+    QMessageBox::information(this, "УСПЕХ", "Пакет отправлен успешно");
+    bool x = logger->makeNote( 1, getCurrentDateAndTime(), 1, data, 2);
+    if ( x ) {
+        makeLogNote( "запись действия добавлена в БД" );
+    }
+        else {
+        makeLogNote( "ошиба записи действия в БД" );
+    }*/
+}
+
 void MainWindow::setIp() {
     IpDialog dia;
     if ( dia.exec() ) {
         myIp = dia.value();
     }
+}
+
+QString MainWindow::makeDatagramCommand( QString q )
+{
+    /*QString answer = "";
+    answer.append( "0" );                        //метод сжатия
+    answer.append( converter->dobei( q, 6 ) );      //отправитель добить до 6
+    answer.append( converter->dobei( "mbu" , 6) );  //получатель
+    answer.append( "0" );                        //категория данных
+    answer.append( "C" );                        //данные о сообщении
+    answer.append( "C1" );                       //Идентификатор приложения, которое  должно обрабатывать переданные данные.
+    answer.append( "=" );                        //Признак начала передаваемых данных
+    QSqlQuery query= QSqlQuery( db );
+    QString s;
+    s = "SELECT st_x(obj_location), st_y(obj_location), st_z(obj_location), direction FROM own_forces.combatobject_location WHERE combat_hierarchy='"+q+"';";
+    if ( !query.exec( s ) ) {
+        makeLogNote("cant select");
+    }
+    else {
+        if ( query.size() == 0 ) return "error";
+        while ( query.next() ) {
+            answer.append( query.value( 0 ).toString() );
+            answer.append( ";" );
+            answer.append( query.value( 1 ).toString() );
+            answer.append( ";" );
+            answer.append( query.value( 2 ).toString() );
+            answer.append( ";" );
+            answer.append( query.value( 3 ).toString() );
+            answer.append( ";" );
+        }
+    }
+    answer.append( "\r" );
+    return answer;*/
+    return "";
 }
 
 void MainWindow::parsingMessage( QString s )
