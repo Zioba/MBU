@@ -13,7 +13,7 @@ public:
     QByteArray encodeDatagram( QStringList ); //закодировать датаграмму
     QStringList decodeDatagram( QByteArray ); //раскодировать датаграмму
     QByteArray generateReceiptResponse( QStringList ); //генерация датаграммы квитанции
-
+    QString dobei(QString s, int len);
 private:
     QString convertIpBinary( QString ); //конвертирует обычный ip адрес в бинарную строку
     QString convertToBinary( QString, int ); //преобразование заданной строки в бинарную, и подгонка её к нужному размеру

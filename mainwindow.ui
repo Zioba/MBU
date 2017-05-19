@@ -127,7 +127,39 @@
      <addaction name="showCommandTableAction"/>
      <addaction name="sendCommand"/>
     </widget>
+    <widget class="QMenu" name="menu_2">
+     <property name="title">
+      <string>Маршруты</string>
+     </property>
+     <addaction name="action_3"/>
+     <addaction name="action_4"/>
+    </widget>
+    <widget class="QMenu" name="menu_3">
+     <property name="title">
+      <string>Документы</string>
+     </property>
+     <addaction name="action_5"/>
+     <addaction name="action_6"/>
+    </widget>
+    <widget class="QMenu" name="menu_4">
+     <property name="title">
+      <string>режимы</string>
+     </property>
+     <addaction name="action_9"/>
+     <addaction name="action_10"/>
+    </widget>
+    <widget class="QMenu" name="menu_5">
+     <property name="title">
+      <string>местоположение</string>
+     </property>
+     <addaction name="action_11"/>
+     <addaction name="action_12"/>
+    </widget>
     <addaction name="commandMenu"/>
+    <addaction name="menu_2"/>
+    <addaction name="menu_3"/>
+    <addaction name="menu_4"/>
+    <addaction name="menu_5"/>
    </widget>
    <addaction name="menu"/>
   </widget>
@@ -142,12 +174,52 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="showCommandTableAction">
    <property name="text">
-    <string>Показать таблицу</string>
+    <string>отобразить данные</string>
    </property>
   </action>
   <action name="sendCommand">
    <property name="text">
     <string>отправить комманду</string>
+   </property>
+  </action>
+  <action name="action_3">
+   <property name="text">
+    <string>отобразить данные</string>
+   </property>
+  </action>
+  <action name="action_4">
+   <property name="text">
+    <string>отправить маршрут</string>
+   </property>
+  </action>
+  <action name="action_5">
+   <property name="text">
+    <string>отобразить данные</string>
+   </property>
+  </action>
+  <action name="action_6">
+   <property name="text">
+    <string>отправить документ</string>
+   </property>
+  </action>
+  <action name="action_9">
+   <property name="text">
+    <string>отобразить данные</string>
+   </property>
+  </action>
+  <action name="action_10">
+   <property name="text">
+    <string>отправить данные о режиме</string>
+   </property>
+  </action>
+  <action name="action_11">
+   <property name="text">
+    <string>отобразить данные</string>
+   </property>
+  </action>
+  <action name="action_12">
+   <property name="text">
+    <string>отправить местоположение</string>
    </property>
   </action>
  </widget>

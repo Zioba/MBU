@@ -30,7 +30,7 @@
        <item>
         <widget class="QLabel" name="messLabel">
          <property name="text">
-          <string>Введите code записи, которую надо удалить</string>
+          <string>Введите id записи, которую надо отправить</string>
          </property>
          <property name="scaledContents">
           <bool>false</bool>
@@ -55,10 +55,6 @@
     </layout>
    </item>
   </layout>
-  <zorder>buttonBox</zorder>
-  <zorder>messLabel</zorder>
-  <zorder>lineEdit</zorder>
-  <zorder>messLabel</zorder>
  </widget>
  <resources/>
  <connections>

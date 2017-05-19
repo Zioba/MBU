@@ -111,3 +111,8 @@ bool DbWorker::writeRocket(QString x,QString time, QString object)
         return false;
     }
 }
+
+QSqlDatabase DbWorker::getDb() const
+{
+    return db;
+}

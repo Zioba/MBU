@@ -10,6 +10,7 @@
 #include <QSqlQuery>
 #include <QSqlTableModel>
 #include <QSqlError>
+#include <QMessageBox>
 #include "converter.h"
 #include "dbworker.h"
 

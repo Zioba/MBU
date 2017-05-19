@@ -20,6 +20,8 @@ public:
     QSqlTableModel *getTable (QTableView *table, QString tableName, QString shortName);
     bool writeCoordinats (QString x, QString y, QString z, QString direction, QString time, QString object);
     bool writeRocket(QString x, QString time, QString object);
+    QSqlDatabase getDb() const;
+
 private:
     bool connectionStatus;
     QSqlDatabase db;

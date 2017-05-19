@@ -112,3 +112,11 @@ QString Converter::convertToDex( QString s )
     QString b2 = QString( "%1" ).arg( answer, 0, 10 );
     return b2;
 }
+
+QString Converter::dobei( QString s, int len )
+{
+    while ( s.size() < len ) {
+        s = "0" + s;
+    }
+    return s;
+}

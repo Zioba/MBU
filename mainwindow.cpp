@@ -110,44 +110,6 @@ void MainWindow::on_logTableBut_3_clicked()
 
 void MainWindow::on_showCommandTableAction_triggered()
 {
-    /*QString trash;
-    DelDialog dia;
-    if ( dia.exec() ) {
-        trash = dia.value();
-    }
-    QString data = makeDatagramCoord( trash );
-    if ( data == "error" ) {
-        makeLogNote( "ошибка создания датаграммы" );
-        QMessageBox::information(this, "ОШИБКА", "такой записи не существует!");
-        return;
-    }
-    QStringList list;
-    list << myIp.toString()
-         << targetIp.toString()
-         << "17"
-         << QString::number( data.length() + 224 )
-         << myPort
-         << targetPort
-         << QString::number( data.length() )
-         << ""
-         << "0001"
-         << QString::number( unicumMessageId )
-         << "1"
-         << "1"
-         << data;
-    unicumMessageId++;
-    QByteArray datagram = converter->encode( list );
-    qDebug() << targetPort.toLong( Q_NULLPTR, 10 );
-    udpSocket.writeDatagram( datagram, targetIp, targetPort.toLong( Q_NULLPTR, 10) );
-    makeLogNote( "отправлен пакет" );
-    QMessageBox::information(this, "УСПЕХ", "Пакет отправлен успешно");
-    bool x = logger->makeNote( 1, getCurrentDateAndTime(), 1, data, 2);
-    if ( x ) {
-        makeLogNote( "запись действия добавлена в БД" );
-    }
-        else {
-        makeLogNote( "ошиба записи действия в БД" );
-    }*/
     QSqlTableModel *model = dbConnect.getTable(ui->tableView, "orders_alerts.orders_alerts_info", "orders_alerts_info");
     ui->tableView->setModel( model );
     for ( int i = 0; i < model->columnCount(); i++ ) {
@@ -163,13 +125,14 @@ void MainWindow::on_sendCommand_triggered()
     if ( dia.exec() ) {
         trash = dia.value();
     }
-    /*QString data = makeDatagramCoord( trash );
+    QString data = makeDatagramCommand( "3" );
     if ( data == "error" ) {
         makeLogNote( "ошибка создания датаграммы" );
         QMessageBox::information(this, "ОШИБКА", "такой записи не существует!");
         return;
     }
-    QStringList list;
+    qDebug() << data;
+    /*QStringList list;
     list << myIp.toString()
          << targetIp.toString()
          << "17"
@@ -207,17 +170,20 @@ void MainWindow::setIp() {
 
 QString MainWindow::makeDatagramCommand( QString q )
 {
-    /*QString answer = "";
+    QString answer = "";
     answer.append( "0" );                        //метод сжатия
     answer.append( converter->dobei( q, 6 ) );      //отправитель добить до 6
     answer.append( converter->dobei( "mbu" , 6) );  //получатель
     answer.append( "0" );                        //категория данных
-    answer.append( "C" );                        //данные о сообщении
-    answer.append( "C1" );                       //Идентификатор приложения, которое  должно обрабатывать переданные данные.
+    answer.append( "P" );                        //данные о сообщении
+    answer.append( "K1" );                       //Идентификатор приложения, которое  должно обрабатывать переданные данные.
     answer.append( "=" );                        //Признак начала передаваемых данных
-    QSqlQuery query= QSqlQuery( db );
+    QSqlQuery query= QSqlQuery( dbConnect.getDb() );
     QString s;
-    s = "SELECT st_x(obj_location), st_y(obj_location), st_z(obj_location), direction FROM own_forces.combatobject_location WHERE combat_hierarchy='"+q+"';";
+    s =s+"SELECT orinf.order_id, orinf.date_add, order_tid, orattr.execution_time, orattr.execution_indication_tid "+
+        "FROM orders_alerts.orders_alerts_info orinf JOIN orders_alerts.orders_alerts_attrib orattr "+
+        "ON orattr.order_id = orinf.order_id WHERE orinf.order_id='"+q+"';";
+    qDebug() << s;
     if ( !query.exec( s ) ) {
         makeLogNote("cant select");
     }
@@ -232,11 +198,13 @@ QString MainWindow::makeDatagramCommand( QString q )
             answer.append( ";" );
             answer.append( query.value( 3 ).toString() );
             answer.append( ";" );
+            answer.append( query.value( 4 ).toString() );
+            answer.append( ";" );
         }
     }
+    //SELECT param_tid, param_value FROM orders_alerts.orders_alerts_param WHERE order_id='1';
     answer.append( "\r" );
-    return answer;*/
-    return "";
+    return answer;
 }
 
 void MainWindow::parsingMessage( QString s )
