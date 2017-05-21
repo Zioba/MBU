@@ -18,6 +18,7 @@ MainWindow::MainWindow(DbWorker dbConnect, QWidget *parent) :
     on_combObjTableBut_clicked();
     converter = new Converter();
     setIp();
+    targetIp.setAddress("127.0.0.1");
     connect(&udpSocket, SIGNAL(readyRead()), this, SLOT(readDatagram()));
 }
 
@@ -125,14 +126,14 @@ void MainWindow::on_sendCommand_triggered()
     if ( dia.exec() ) {
         trash = dia.value();
     }
-    QString data = makeDatagramCommand( "3" );
+    QString data = makeDatagramCommand( "1" );
     if ( data == "error" ) {
         makeLogNote( "ошибка создания датаграммы" );
         QMessageBox::information(this, "ОШИБКА", "такой записи не существует!");
         return;
     }
     qDebug() << data;
-    /*QStringList list;
+    QStringList list;
     list << myIp.toString()
          << targetIp.toString()
          << "17"
@@ -147,18 +148,18 @@ void MainWindow::on_sendCommand_triggered()
          << "1"
          << data;
     unicumMessageId++;
-    QByteArray datagram = converter->encode( list );
+    QByteArray datagram = converter->encodeDatagram( list );
     qDebug() << targetPort.toLong( Q_NULLPTR, 10 );
     udpSocket.writeDatagram( datagram, targetIp, targetPort.toLong( Q_NULLPTR, 10) );
     makeLogNote( "отправлен пакет" );
     QMessageBox::information(this, "УСПЕХ", "Пакет отправлен успешно");
-    bool x = logger->makeNote( 1, getCurrentDateAndTime(), 1, data, 2);
+    bool x = dbConnect.makeNote( 1, getCurrentDateAndTime(), 1, data, 2);
     if ( x ) {
         makeLogNote( "запись действия добавлена в БД" );
     }
         else {
         makeLogNote( "ошиба записи действия в БД" );
-    }*/
+    }
 }
 
 void MainWindow::setIp() {
@@ -202,7 +203,26 @@ QString MainWindow::makeDatagramCommand( QString q )
             answer.append( ";" );
         }
     }
-    //SELECT param_tid, param_value FROM orders_alerts.orders_alerts_param WHERE order_id='1';
+    s = "SELECT param_tid, param_value FROM orders_alerts.orders_alerts_param WHERE order_id='";
+    s = s + q +"';";
+    qDebug() << s;
+    if ( !query.exec( s ) ) {
+        makeLogNote("cant select");
+    }
+    else {
+        if ( query.size() == 0 ) return "error";
+        int size = query.size();
+        qDebug() << size;
+        answer.append(QString::number(size));
+        answer.append( ";" );
+        while ( query.next() ) {
+            answer.append( query.value( 0 ).toString() );
+            answer.append( ";" );
+            answer.append( query.value( 1 ).toString() );
+            answer.append( ";" );
+        }
+    }
+    //преобразование времени в нужный формат
     answer.append( "\r" );
     return answer;
 }

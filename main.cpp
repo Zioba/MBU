@@ -1,5 +1,5 @@
-#include "mainwindow.h"
 #include <QApplication>
+#include "mainwindow.h"
 #include "dbworker.h"
 
 int main(int argc, char *argv[])
