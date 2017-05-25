@@ -83,6 +83,55 @@ QSqlTableModel *DbWorker::getTable(QTableView *table, QString tableName, QString
     return model;
 }
 
+QString DbWorker::getCommandInformation(QString object)
+{
+    QString answer = "";
+    QSqlQuery query= QSqlQuery(db);
+    QString s;
+    s =s+"SELECT orinf.order_id, orinf.date_add, order_tid, orattr.execution_time, orattr.execution_indication_tid "+
+        "FROM orders_alerts.orders_alerts_info orinf JOIN orders_alerts.orders_alerts_attrib orattr "+
+        "ON orattr.order_id = orinf.order_id WHERE orinf.order_id='"+object+"';";
+    if ( !query.exec( s ) ) {
+        return "error";
+    }
+    else {
+        if ( query.size() == 0 ) return "error";
+        while ( query.next() ) {
+            answer.append( query.value( 0 ).toString() );
+            answer.append( ";" );
+            answer.append( query.value( 1 ).toString() );
+            answer.append( ";" );
+            answer.append( query.value( 2 ).toString() );
+            answer.append( ";" );
+            answer.append( query.value( 3 ).toString() );
+            answer.append( ";" );
+            answer.append( query.value( 4 ).toString() );
+            answer.append( ";" );
+        }
+    }
+    s = "SELECT param_tid, param_value FROM orders_alerts.orders_alerts_param WHERE order_id='";
+    s = s + object +"';";
+    if ( !query.exec( s ) ) {
+        return "error";
+    }
+    else {
+        int size = query.size();
+        answer.append(QString::number(size));
+        answer.append( ";" );
+        if ( query.size() != 0 ) {
+            while ( query.next() ) {
+                answer.append( query.value( 0 ).toString() );
+                answer.append( ";" );
+                answer.append( query.value( 1 ).toString() );
+                answer.append( ";" );
+            }
+        }
+    }
+    //преобразование времени в нужный формат
+    answer.append( "\r" );
+    return answer;
+}
+
 bool DbWorker::writeCoordinats(QString x, QString y, QString z, QString direction,
                                QString time, QString object)
 {
@@ -110,9 +159,4 @@ bool DbWorker::writeRocket(QString x,QString time, QString object)
     else {
         return false;
     }
-}
-
-QSqlDatabase DbWorker::getDb() const
-{
-    return db;
 }

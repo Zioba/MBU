@@ -17,10 +17,10 @@ public:
 
     bool getConnectionStatus();
     bool makeNote( int type, QString date, int x, QString package, int status);
-    QSqlTableModel *getTable (QTableView *table, QString tableName, QString shortName);
     bool writeCoordinats (QString x, QString y, QString z, QString direction, QString time, QString object);
     bool writeRocket(QString x, QString time, QString object);
-    QSqlDatabase getDb() const;
+    QSqlTableModel *getTable (QTableView *table, QString tableName, QString shortName);
+    QString getCommandInformation(QString object);
 
 private:
     bool connectionStatus;

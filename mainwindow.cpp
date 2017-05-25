@@ -99,7 +99,7 @@ void MainWindow::on_combObjTableBut_clicked()
     makeLogNote( "Загружены данные combat objects" );
 }
 
-void MainWindow::on_logTableBut_3_clicked()
+void MainWindow::on_logTableBut_clicked()
 {
     QSqlTableModel *model = dbConnect.getTable(ui->tableView, "log.log_table_message", "log_table_message");
     ui->tableView->setModel( model );
@@ -109,7 +109,7 @@ void MainWindow::on_logTableBut_3_clicked()
     makeLogNote( "Загружены данные log table" );
 }
 
-void MainWindow::on_showCommandTableAction_triggered()
+void MainWindow::on_showCommandTable_triggered()
 {
     QSqlTableModel *model = dbConnect.getTable(ui->tableView, "orders_alerts.orders_alerts_info", "orders_alerts_info");
     ui->tableView->setModel( model );
@@ -126,7 +126,7 @@ void MainWindow::on_sendCommand_triggered()
     if ( dia.exec() ) {
         trash = dia.value();
     }
-    QString data = makeDatagramCommand( "1" );
+    QString data = makeDatagramCommand( "3" );
     if ( data == "error" ) {
         makeLogNote( "ошибка создания датаграммы" );
         QMessageBox::information(this, "ОШИБКА", "такой записи не существует!");
@@ -162,6 +162,46 @@ void MainWindow::on_sendCommand_triggered()
     }
 }
 
+void MainWindow::on_showRouteTable_triggered()
+{
+    makeLogNote( "Загружены данные о маршрутах" );
+}
+
+void MainWindow::on_sendRoute_triggered()
+{
+
+}
+
+void MainWindow::on_showDocumentTable_triggered()
+{
+    makeLogNote( "Загружены данные о документах" );
+}
+
+void MainWindow::on_sendDocument_triggered()
+{
+
+}
+
+void MainWindow::on_showModeTable_triggered()
+{
+    makeLogNote( "Загружены данные о режимах" );
+}
+
+void MainWindow::on_sendMode_triggered()
+{
+
+}
+
+void MainWindow::on_showPositionTable_triggered()
+{
+    makeLogNote( "Загружены данные о местоположениях" );
+}
+
+void MainWindow::on_sendPosition_triggered()
+{
+
+}
+
 void MainWindow::setIp() {
     IpDialog dia;
     if ( dia.exec() ) {
@@ -179,51 +219,13 @@ QString MainWindow::makeDatagramCommand( QString q )
     answer.append( "P" );                        //данные о сообщении
     answer.append( "K1" );                       //Идентификатор приложения, которое  должно обрабатывать переданные данные.
     answer.append( "=" );                        //Признак начала передаваемых данных
-    QSqlQuery query= QSqlQuery( dbConnect.getDb() );
-    QString s;
-    s =s+"SELECT orinf.order_id, orinf.date_add, order_tid, orattr.execution_time, orattr.execution_indication_tid "+
-        "FROM orders_alerts.orders_alerts_info orinf JOIN orders_alerts.orders_alerts_attrib orattr "+
-        "ON orattr.order_id = orinf.order_id WHERE orinf.order_id='"+q+"';";
-    qDebug() << s;
-    if ( !query.exec( s ) ) {
-        makeLogNote("cant select");
+    QString request = dbConnect.getCommandInformation(q);
+    if (request.compare("error") == 0) {
+        return "error";
     }
     else {
-        if ( query.size() == 0 ) return "error";
-        while ( query.next() ) {
-            answer.append( query.value( 0 ).toString() );
-            answer.append( ";" );
-            answer.append( query.value( 1 ).toString() );
-            answer.append( ";" );
-            answer.append( query.value( 2 ).toString() );
-            answer.append( ";" );
-            answer.append( query.value( 3 ).toString() );
-            answer.append( ";" );
-            answer.append( query.value( 4 ).toString() );
-            answer.append( ";" );
-        }
+        answer.append(request);
     }
-    s = "SELECT param_tid, param_value FROM orders_alerts.orders_alerts_param WHERE order_id='";
-    s = s + q +"';";
-    qDebug() << s;
-    if ( !query.exec( s ) ) {
-        makeLogNote("cant select");
-    }
-    else {
-        if ( query.size() == 0 ) return "error";
-        int size = query.size();
-        qDebug() << size;
-        answer.append(QString::number(size));
-        answer.append( ";" );
-        while ( query.next() ) {
-            answer.append( query.value( 0 ).toString() );
-            answer.append( ";" );
-            answer.append( query.value( 1 ).toString() );
-            answer.append( ";" );
-        }
-    }
-    //преобразование времени в нужный формат
-    answer.append( "\r" );
     return answer;
 }
 

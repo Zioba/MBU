@@ -56,7 +56,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="logTableBut_3">
+           <widget class="QPushButton" name="logTableBut">
             <property name="enabled">
              <bool>true</bool>
             </property>
@@ -124,55 +124,46 @@
      <property name="title">
       <string>Комманды/Сигналы</string>
      </property>
-     <addaction name="showCommandTableAction"/>
+     <addaction name="showCommandTable"/>
      <addaction name="sendCommand"/>
     </widget>
-    <widget class="QMenu" name="menu_2">
+    <widget class="QMenu" name="routeMenu">
      <property name="title">
       <string>Маршруты</string>
      </property>
-     <addaction name="action_3"/>
-     <addaction name="action_4"/>
+     <addaction name="showRouteTable"/>
+     <addaction name="sendRoute"/>
     </widget>
-    <widget class="QMenu" name="menu_3">
+    <widget class="QMenu" name="documentMenu">
      <property name="title">
       <string>Документы</string>
      </property>
-     <addaction name="action_5"/>
-     <addaction name="action_6"/>
+     <addaction name="showDocumentTable"/>
+     <addaction name="sendDocument"/>
     </widget>
-    <widget class="QMenu" name="menu_4">
+    <widget class="QMenu" name="modeMenu">
      <property name="title">
       <string>режимы</string>
      </property>
-     <addaction name="action_9"/>
-     <addaction name="action_10"/>
+     <addaction name="showModeTable"/>
+     <addaction name="sendMode"/>
     </widget>
-    <widget class="QMenu" name="menu_5">
+    <widget class="QMenu" name="positionMenu">
      <property name="title">
       <string>местоположение</string>
      </property>
-     <addaction name="action_11"/>
-     <addaction name="action_12"/>
+     <addaction name="showPositionTable"/>
+     <addaction name="sendPosition"/>
     </widget>
     <addaction name="commandMenu"/>
-    <addaction name="menu_2"/>
-    <addaction name="menu_3"/>
-    <addaction name="menu_4"/>
-    <addaction name="menu_5"/>
+    <addaction name="routeMenu"/>
+    <addaction name="documentMenu"/>
+    <addaction name="modeMenu"/>
+    <addaction name="positionMenu"/>
    </widget>
    <addaction name="menu"/>
   </widget>
-  <widget class="QToolBar" name="mainToolBar">
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-  </widget>
-  <widget class="QStatusBar" name="statusBar"/>
-  <action name="showCommandTableAction">
+  <action name="showCommandTable">
    <property name="text">
     <string>отобразить данные</string>
    </property>
@@ -182,42 +173,42 @@
     <string>отправить комманду</string>
    </property>
   </action>
-  <action name="action_3">
+  <action name="showRouteTable">
    <property name="text">
     <string>отобразить данные</string>
    </property>
   </action>
-  <action name="action_4">
+  <action name="sendRoute">
    <property name="text">
     <string>отправить маршрут</string>
    </property>
   </action>
-  <action name="action_5">
+  <action name="showDocumentTable">
    <property name="text">
     <string>отобразить данные</string>
    </property>
   </action>
-  <action name="action_6">
+  <action name="sendDocument">
    <property name="text">
     <string>отправить документ</string>
    </property>
   </action>
-  <action name="action_9">
+  <action name="showModeTable">
    <property name="text">
     <string>отобразить данные</string>
    </property>
   </action>
-  <action name="action_10">
+  <action name="sendMode">
    <property name="text">
     <string>отправить данные о режиме</string>
    </property>
   </action>
-  <action name="action_11">
+  <action name="showPositionTable">
    <property name="text">
     <string>отобразить данные</string>
    </property>
   </action>
-  <action name="action_12">
+  <action name="sendPosition">
    <property name="text">
     <string>отправить местоположение</string>
    </property>
