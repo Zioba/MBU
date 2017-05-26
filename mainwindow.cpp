@@ -18,7 +18,7 @@ MainWindow::MainWindow(DbWorker dbConnect, QWidget *parent) :
     on_combObjTableBut_clicked();
     converter = new Converter();
     setIp();
-    targetIp.setAddress("127.0.0.1");
+    targetIp.setAddress("192.168.1.42");
     connect(&udpSocket, SIGNAL(readyRead()), this, SLOT(readDatagram()));
 }
 
@@ -126,13 +126,12 @@ void MainWindow::on_sendCommand_triggered()
     if ( dia.exec() ) {
         trash = dia.value();
     }
-    QString data = makeDatagramCommand( "3" );
+    QString data = makeDatagramCommand( "1" );
     if ( data == "error" ) {
         makeLogNote( "ошибка создания датаграммы" );
         QMessageBox::information(this, "ОШИБКА", "такой записи не существует!");
         return;
     }
-    qDebug() << data;
     QStringList list;
     list << myIp.toString()
          << targetIp.toString()
@@ -148,8 +147,7 @@ void MainWindow::on_sendCommand_triggered()
          << "1"
          << data;
     unicumMessageId++;
-    QByteArray datagram = converter->encodeDatagram( list );
-    qDebug() << targetPort.toLong( Q_NULLPTR, 10 );
+    QByteArray datagram = converter->encodeDatagram(list);
     udpSocket.writeDatagram( datagram, targetIp, targetPort.toLong( Q_NULLPTR, 10) );
     makeLogNote( "отправлен пакет" );
     QMessageBox::information(this, "УСПЕХ", "Пакет отправлен успешно");

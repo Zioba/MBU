@@ -152,7 +152,7 @@ bool DbWorker::writeRocket(QString x,QString time, QString object)
     QSqlQuery query = QSqlQuery(db);
     QString queryString;
     queryString = "UPDATE own_forces.rocket SET type_tid='"+ x +
-            "', date_edit='"+ time + "' WHERE combatobjectid='"+object+"';";
+            "', date_edit='"+ time + "' WHERE combat_hierarchy='"+object+"';";
     if ( query.exec(queryString) ) {
         return true;
     }
