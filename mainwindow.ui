@@ -239,7 +239,7 @@
        </font>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>4</number>
       </property>
       <property name="tabsClosable">
        <bool>false</bool>
@@ -296,9 +296,6 @@
         <string>Местоположение</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout">
-        <item row="1" column="0">
-         <widget class="QTableView" name="tableView"/>
-        </item>
         <item row="0" column="0">
          <widget class="QTableWidget" name="coordinatTable">
           <column>
@@ -405,25 +402,6 @@
           </column>
          </widget>
         </item>
-        <item row="1" column="0">
-         <widget class="QTableWidget" name="tableWidget">
-          <column>
-           <property name="text">
-            <string>Получатель</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Отметка</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Дата отметки</string>
-           </property>
-          </column>
-         </widget>
-        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="tab_3">
@@ -456,25 +434,6 @@
           <column>
            <property name="text">
             <string>Источник информации</string>
-           </property>
-          </column>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QTableWidget" name="tableWidget_2">
-          <column>
-           <property name="text">
-            <string>Получатель</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Отметка</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Дата отметки</string>
            </property>
           </column>
          </widget>
@@ -599,7 +558,7 @@
      <x>0</x>
      <y>0</y>
      <width>990</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">

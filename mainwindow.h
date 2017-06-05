@@ -11,6 +11,7 @@
 #include <QSqlTableModel>
 #include <QSqlError>
 #include <QMessageBox>
+#include <QTableWidget>
 #include "converter.h"
 #include "dbworker.h"
 
@@ -33,21 +34,15 @@ private slots:
     void on_exitButton_clicked();
     void on_updBut_clicked();
     void on_clearBut_clicked();
-    void on_combObjTableBut_clicked();
     void on_logTableBut_clicked();
     void parsingMessage( QString );
     void parsingCoord ( QString, QString );
     void parsingRocket( QString, QString );
 
-    void on_showCommandTable_triggered();
     void on_sendCommand_triggered();
-    void on_showRouteTable_triggered();
     void on_sendRoute_triggered();
-    void on_showDocumentTable_triggered();
     void on_sendDocument_triggered();
-    void on_showModeTable_triggered();
     void on_sendMode_triggered();
-    void on_showPositionTable_triggered();
     void on_sendPosition_triggered();
 
 private:
@@ -68,7 +63,7 @@ private:
     QString getCurrentDateAndTime();
     QString assistParser( QString, int & );
     QString makeDatagramCommand(QString q);
-    void fillTables();
+    void resizeColumns(QTableWidget *table);
 };
 
 #endif // MAINWINDOW_H

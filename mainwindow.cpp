@@ -3,6 +3,14 @@
 #include "deldialog.h"
 #include "ipdialog.h"
 
+void MainWindow::resizeColumns(QTableWidget *table)
+{
+    for (int i=0; i < table->columnCount(); i++)
+    {
+        table->resizeColumnToContents(i);
+    }
+}
+
 MainWindow::MainWindow(DbWorker dbConnect, QWidget *parent) :
     dbConnect(dbConnect),
     QMainWindow(parent),
@@ -15,76 +23,18 @@ MainWindow::MainWindow(DbWorker dbConnect, QWidget *parent) :
     makeLogNote("Начало работы");
 
     udpSocket.bind(LISTERNING_PORT);
-    on_combObjTableBut_clicked();
     converter = new Converter();
     setIp();
     targetIp.setAddress("192.168.1.42");
     connect(&udpSocket, SIGNAL(readyRead()), this, SLOT(readDatagram()));
     ui->dateTimeEdit->setDateTime(QDateTime::currentDateTime());
-    for (int i=0; i < ui->commandTable->columnCount(); i++)
-    {
-        ui->commandTable->resizeColumnToContents(i);
-    }
-    for (int i=0; i < ui->modeTable->columnCount(); i++)
-    {
-        ui->modeTable->resizeColumnToContents(i);
-    }
-    for (int i=0; i < ui->coordinatTable->columnCount(); i++)
-    {
-        ui->coordinatTable->resizeColumnToContents(i);
-    }
-    for (int i=0; i < ui->routeTable->columnCount(); i++)
-    {
-        ui->routeTable->resizeColumnToContents(i);
-    }
-    for (int i=0; i < ui->documentTable->columnCount(); i++)
-    {
-        ui->documentTable->resizeColumnToContents(i);
-    }
-    for (int i=0; i < ui->objectTable->columnCount(); i++)
-    {
-        ui->objectTable->resizeColumnToContents(i);
-    }
-    fillTables();
-}
-
-void MainWindow::fillTables() {
-    QSqlQuery query = QSqlQuery(dbConnect.getDb());
-    //подумать что делать с пунктом время исполнения
-    QString selectPattern = "SELECT t1.termname, inf.date_add, inf.order_id "
-                "FROM orders_alerts.orders_alerts_info  inf "
-                "JOIN reference_data.terms t1 ON inf.order_tid = t1.termhierarchy;";
-    if (!query.exec(selectPattern)) {
-        qDebug() << "Unable to make select operation!" << query.lastError();
-    }
-    ui->commandTable->setRowCount(query.size());
-    int i= 0;
-    while (query.next()) {
-        ui->commandTable->setItem(i, 0, new QTableWidgetItem(query.value(0).toString()));
-        ui->commandTable->setItem(i, 1, new QTableWidgetItem(query.value(1).toString()));
-        ui->commandTable->setItem(i, 2, new QTableWidgetItem(query.value(2).toString()));
-        i++;
-    }
-    /*root->setExpanded(true);
-    out = new QTreeWidgetItem(documents);
-    out->setText(0, "Исходящие");
-    in = new QTreeWidgetItem(documents);
-    in->setText(0, "Входящие");
-    root = out;
-    selectPattern = "SELECT cinf.outgoing_reg_number, cinf.outgoing_reg_datetime, t1.termname, t2.termname, cinf.cmbdid "
-            "FROM combatdocs.combatdocs_info cinf "
-              "JOIN combatdocs.combatdocs_type ctyp ON cinf.cmbdid = ctyp.cmbdid "
-              "JOIN combatdocs.combatdocs_theme cthm ON cinf.cmbdid = cthm.cmbdid "
-              "JOIN reference_data.terms t1 ON ctyp.doctype_tid = t1.termhierarchy "
-              "JOIN reference_data.terms t2 ON cthm.doctheme_tid = t2.termhierarchy;";
-    if (!query.exec(selectPattern)) {
-        qDebug() << "Unable to make select operation!" << query.lastError();
-    }
-    while (query.next()) {
-        addDocument(root, query.value(0).toString(), query.value(1).toDateTime(),
-                    query.value(2).toString(), query.value(3).toString(), query.value(4).toString());
-    }
-    root->setExpanded(true);*/
+    resizeColumns(ui->commandTable);
+    resizeColumns(ui->modeTable);
+    resizeColumns(ui->coordinatTable);
+    resizeColumns(ui->routeTable);
+    resizeColumns(ui->documentTable);
+    resizeColumns(ui->objectTable);
+    on_updBut_clicked();
 }
 
 MainWindow::~MainWindow()
@@ -145,8 +95,91 @@ void MainWindow::on_exitButton_clicked()
 
 void MainWindow::on_updBut_clicked()
 {
-    ui->tableView->update();
-    ui->logField->append( tr( "%1 таблица обновлена" ).arg( QTime::currentTime().toString( "hh:mm:ss" ) ) );
+    QSqlQuery query = QSqlQuery(dbConnect.getDb());
+    //подумать что делать с пунктом время исполнения
+    QString selectPattern = "SELECT t1.termname, inf.date_add, inf.order_id "
+                "FROM orders_alerts.orders_alerts_info  inf "
+                "JOIN reference_data.terms t1 ON inf.order_tid = t1.termhierarchy;";
+    if (!query.exec(selectPattern)) {
+        qDebug() << "Unable to make select operation!" << query.lastError();
+    }
+    ui->commandTable->setRowCount(query.size());
+    int i= 0;
+    while (query.next()) {
+        ui->commandTable->setItem(i, 0, new QTableWidgetItem(query.value(0).toString()));
+        ui->commandTable->setItem(i, 1, new QTableWidgetItem(query.value(1).toString()));
+        ui->commandTable->setItem(i, 2, new QTableWidgetItem(query.value(2).toString()));
+        i++;
+    }
+    selectPattern = "SELECT cinf.outgoing_reg_number, cinf.outgoing_reg_datetime, t1.termname, t2.termname, cinf.cmbdid "
+            "FROM combatdocs.combatdocs_info cinf "
+              "JOIN combatdocs.combatdocs_type ctyp ON cinf.cmbdid = ctyp.cmbdid "
+              "JOIN combatdocs.combatdocs_theme cthm ON cinf.cmbdid = cthm.cmbdid "
+              "JOIN reference_data.terms t1 ON ctyp.doctype_tid = t1.termhierarchy "
+              "JOIN reference_data.terms t2 ON cthm.doctheme_tid = t2.termhierarchy;";
+    if (!query.exec(selectPattern)) {
+        qDebug() << "Unable to make select operation!" << query.lastError();
+    }
+    ui->documentTable->setRowCount(query.size());
+    i = 0;
+    while (query.next()) {
+        ui->documentTable->setItem(i, 0, new QTableWidgetItem(query.value(0).toString()));
+        ui->documentTable->setItem(i, 1, new QTableWidgetItem(query.value(1).toString()));
+        ui->documentTable->setItem(i, 2, new QTableWidgetItem(query.value(2).toString()));
+        ui->documentTable->setItem(i, 3, new QTableWidgetItem(query.value(3).toString()));
+        ui->documentTable->setItem(i, 4, new QTableWidgetItem(query.value(4).toString()));
+        i++;
+    }
+    selectPattern = "SELECT combat_hierarchy,"
+            "ST_X(obj_location), ST_Y(obj_location), ST_Z(obj_location), direction,"
+              "date_add, date_edit, date_delete, id_manager FROM own_forces.combatobject_location;";
+    if (!query.exec(selectPattern)) {
+        qDebug() << "Unable to make select operation!" << query.lastError();
+    }
+    ui->coordinatTable->setRowCount(query.size());
+    i = 0;
+    while (query.next()) {
+        QString coordinats = "X: "+ query.value(1).toString() + " Y: " + query.value(2).toString() + " Z: " + query.value(3).toString();
+        ui->coordinatTable->setItem(i, 0, new QTableWidgetItem(query.value(0).toString()));
+        ui->coordinatTable->setItem(i, 1, new QTableWidgetItem(coordinats));
+        ui->coordinatTable->setItem(i, 2, new QTableWidgetItem(query.value(4).toString()));
+        ui->coordinatTable->setItem(i, 3, new QTableWidgetItem(query.value(5).toString()));
+        ui->coordinatTable->setItem(i, 4, new QTableWidgetItem(query.value(6).toString()));
+        ui->coordinatTable->setItem(i, 5, new QTableWidgetItem(query.value(7).toString()));
+        ui->coordinatTable->setItem(i, 6, new QTableWidgetItem(query.value(8).toString()));
+        i++;
+    }
+    selectPattern = "SELECT c.combat_hierarchy, c.object_number||' '||t1.termname "
+                    "FROM own_forces.combatstructure c "
+                    "LEFT JOIN reference_data.terms t1 ON object_name = t1.termhierarchy "
+                    "LEFT JOIN reference_data.terms t2 ON type_army   = t2.termhierarchy "
+                    "WHERE c.date_delete is NULL and t1.termhierarchy ~ '*{2}';";
+    if (!query.exec(selectPattern)) {
+        qDebug() << "Unable to make select operation!" << query.lastError();
+    }
+    ui->objectTable->setRowCount(query.size());
+    i = 0;
+    while (query.next()) {
+        ui->objectTable->setItem(i, 0, new QTableWidgetItem(query.value(0).toString()));
+        ui->objectTable->setItem(i, 1, new QTableWidgetItem(query.value(1).toString()));
+        i++;
+    }
+    selectPattern = "SELECT combat_hierarchy, currentmode, date_add, date_edit, date_delete, id_manager FROM own_forces.currentmode;";
+    if (!query.exec(selectPattern)) {
+        qDebug() << "Unable to make select operation!" << query.lastError();
+    }
+    ui->modeTable->setRowCount(query.size());
+    i = 0;
+    while (query.next()) {
+        ui->modeTable->setItem(i, 0, new QTableWidgetItem(query.value(0).toString()));
+        ui->modeTable->setItem(i, 1, new QTableWidgetItem(query.value(1).toString()));
+        ui->modeTable->setItem(i, 2, new QTableWidgetItem(query.value(2).toString()));
+        ui->modeTable->setItem(i, 3, new QTableWidgetItem(query.value(3).toString()));
+        ui->modeTable->setItem(i, 4, new QTableWidgetItem(query.value(4).toString()));
+        ui->modeTable->setItem(i, 5, new QTableWidgetItem(query.value(5).toString()));
+        i++;
+    }
+    makeLogNote("данные обновлены");
 }
 
 void MainWindow::on_clearBut_clicked()
@@ -154,34 +187,14 @@ void MainWindow::on_clearBut_clicked()
     ui->logField->clear();
 }
 
-void MainWindow::on_combObjTableBut_clicked()
-{
-    QSqlTableModel *model = dbConnect.getTable(ui->tableView, "own_forces.combatobject_location", "combatobject_location");
-    ui->tableView->setModel( model );
-    for ( int i = 0; i < model->columnCount(); i++ ) {
-        ui->tableView->horizontalHeader()->setSectionResizeMode( i , QHeaderView::ResizeToContents);
-    }
-    makeLogNote( "Загружены данные combat objects" );
-}
-
 void MainWindow::on_logTableBut_clicked()
 {
-    QSqlTableModel *model = dbConnect.getTable(ui->tableView, "log.log_table_message", "log_table_message");
+    /*QSqlTableModel *model = dbConnect.getTable(ui->tableView, "log.log_table_message", "log_table_message");
     ui->tableView->setModel( model );
     for ( int i = 0; i < model->columnCount(); i++ ) {
         ui->tableView->horizontalHeader()->setSectionResizeMode( i , QHeaderView::ResizeToContents);
     }
-    makeLogNote( "Загружены данные log table" );
-}
-
-void MainWindow::on_showCommandTable_triggered()
-{
-    QSqlTableModel *model = dbConnect.getTable(ui->tableView, "orders_alerts.orders_alerts_info", "orders_alerts_info");
-    ui->tableView->setModel( model );
-    for ( int i = 0; i < model->columnCount(); i++ ) {
-        ui->tableView->horizontalHeader()->setSectionResizeMode( i , QHeaderView::ResizeToContents);
-    }
-    makeLogNote( "Загружены данные orders_alerts_info" );
+    makeLogNote( "Загружены данные log table" );*/
 }
 
 void MainWindow::on_sendCommand_triggered()
@@ -225,19 +238,9 @@ void MainWindow::on_sendCommand_triggered()
     }
 }
 
-void MainWindow::on_showRouteTable_triggered()
-{
-    makeLogNote( "Загружены данные о маршрутах" );
-}
-
 void MainWindow::on_sendRoute_triggered()
 {
 
-}
-
-void MainWindow::on_showDocumentTable_triggered()
-{
-    makeLogNote( "Загружены данные о документах" );
 }
 
 void MainWindow::on_sendDocument_triggered()
@@ -245,19 +248,9 @@ void MainWindow::on_sendDocument_triggered()
 
 }
 
-void MainWindow::on_showModeTable_triggered()
-{
-    makeLogNote( "Загружены данные о режимах" );
-}
-
 void MainWindow::on_sendMode_triggered()
 {
 
-}
-
-void MainWindow::on_showPositionTable_triggered()
-{
-    makeLogNote( "Загружены данные о местоположениях" );
 }
 
 void MainWindow::on_sendPosition_triggered()
