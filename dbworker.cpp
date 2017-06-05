@@ -132,6 +132,11 @@ QString DbWorker::getCommandInformation(QString object)
     return answer;
 }
 
+QSqlDatabase DbWorker::getDb()
+{
+    return this->db;
+}
+
 bool DbWorker::writeCoordinats(QString x, QString y, QString z, QString direction,
                                QString time, QString object)
 {

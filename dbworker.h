@@ -21,6 +21,7 @@ public:
     bool writeRocket(QString x, QString time, QString object);
     QSqlTableModel *getTable (QTableView *table, QString tableName, QString shortName);
     QString getCommandInformation(QString object);
+    QSqlDatabase getDb();
 
 private:
     bool connectionStatus;

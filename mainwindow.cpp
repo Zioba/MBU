@@ -45,6 +45,46 @@ MainWindow::MainWindow(DbWorker dbConnect, QWidget *parent) :
     {
         ui->objectTable->resizeColumnToContents(i);
     }
+    fillTables();
+}
+
+void MainWindow::fillTables() {
+    QSqlQuery query = QSqlQuery(dbConnect.getDb());
+    //подумать что делать с пунктом время исполнения
+    QString selectPattern = "SELECT t1.termname, inf.date_add, inf.order_id "
+                "FROM orders_alerts.orders_alerts_info  inf "
+                "JOIN reference_data.terms t1 ON inf.order_tid = t1.termhierarchy;";
+    if (!query.exec(selectPattern)) {
+        qDebug() << "Unable to make select operation!" << query.lastError();
+    }
+    ui->commandTable->setRowCount(query.size());
+    int i= 0;
+    while (query.next()) {
+        ui->commandTable->setItem(i, 0, new QTableWidgetItem(query.value(0).toString()));
+        ui->commandTable->setItem(i, 1, new QTableWidgetItem(query.value(1).toString()));
+        ui->commandTable->setItem(i, 2, new QTableWidgetItem(query.value(2).toString()));
+        i++;
+    }
+    /*root->setExpanded(true);
+    out = new QTreeWidgetItem(documents);
+    out->setText(0, "Исходящие");
+    in = new QTreeWidgetItem(documents);
+    in->setText(0, "Входящие");
+    root = out;
+    selectPattern = "SELECT cinf.outgoing_reg_number, cinf.outgoing_reg_datetime, t1.termname, t2.termname, cinf.cmbdid "
+            "FROM combatdocs.combatdocs_info cinf "
+              "JOIN combatdocs.combatdocs_type ctyp ON cinf.cmbdid = ctyp.cmbdid "
+              "JOIN combatdocs.combatdocs_theme cthm ON cinf.cmbdid = cthm.cmbdid "
+              "JOIN reference_data.terms t1 ON ctyp.doctype_tid = t1.termhierarchy "
+              "JOIN reference_data.terms t2 ON cthm.doctheme_tid = t2.termhierarchy;";
+    if (!query.exec(selectPattern)) {
+        qDebug() << "Unable to make select operation!" << query.lastError();
+    }
+    while (query.next()) {
+        addDocument(root, query.value(0).toString(), query.value(1).toDateTime(),
+                    query.value(2).toString(), query.value(3).toString(), query.value(4).toString());
+    }
+    root->setExpanded(true);*/
 }
 
 MainWindow::~MainWindow()

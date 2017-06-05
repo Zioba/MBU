@@ -239,7 +239,7 @@
        </font>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>3</number>
       </property>
       <property name="tabsClosable">
        <bool>false</bool>
@@ -390,17 +390,17 @@
          <widget class="QTableWidget" name="commandTable">
           <column>
            <property name="text">
-            <string>Команда</string>
+            <string>Идентификатор</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Наименование</string>
            </property>
           </column>
           <column>
            <property name="text">
             <string>Время формирования</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Время исполнения</string>
            </property>
           </column>
          </widget>

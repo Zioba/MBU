@@ -2,7 +2,7 @@
 #define LOGIC_H
 
 
-class Logic : public Logic
+class Logic
 {
 public:
     Logic();
