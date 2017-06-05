@@ -6,69 +6,547 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>900</width>
-    <height>600</height>
+    <width>990</width>
+    <height>753</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resource.qrc">
+    <normaloff>:/resources/title.png</normaloff>:/resources/title.png</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout_2" columnstretch="2,1">
-    <item row="0" column="1">
-     <layout class="QHBoxLayout" name="horizontalLayout">
+   <layout class="QGridLayout" name="gridLayout_2" rowstretch="1,0" columnstretch="2,4,0">
+    <item row="0" column="0" rowspan="2">
+     <layout class="QVBoxLayout" name="verticalLayout_4">
       <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QPushButton" name="exitButton">
-        <property name="text">
-         <string>Выход</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="1" column="0">
-     <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="0">
-       <widget class="QTableView" name="tableView"/>
-      </item>
-      <item row="1" column="0">
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout">
+         <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
-           <widget class="QPushButton" name="combObjTableBut">
+           <widget class="QLabel" name="label_3">
             <property name="text">
-             <string>таблица объектов</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Данные о системе управления:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="logTableBut">
-            <property name="enabled">
-             <bool>true</bool>
+           <layout class="QFormLayout" name="formLayout">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_6">
+              <property name="text">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Состояние:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="lineEdit_2">
+              <property name="text">
+               <string>Активен</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_4">
+              <property name="text">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Координаты:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QLineEdit" name="lineEdit">
+              <property name="text">
+               <string>12°19'60.21&quot;S 059°23'04.80&quot;E 0224.5</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Текущее время:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QDateTimeEdit" name="dateTimeEdit"/>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Объекты управления&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="objectTable">
+          <column>
+           <property name="text">
+            <string>Код</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Наименование</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QPushButton" name="pushButton">
+            <property name="minimumSize">
+             <size>
+              <width>154</width>
+              <height>45</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>154</width>
+              <height>45</height>
+             </size>
+            </property>
+            <property name="contextMenuPolicy">
+             <enum>Qt::DefaultContextMenu</enum>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
             </property>
             <property name="text">
-             <string>таблица событий</string>
+             <string>Добавить объект</string>
+            </property>
+            <property name="icon">
+             <iconset resource="resource.qrc">
+              <normaloff>:/resources/toolbar/Create.png</normaloff>:/resources/toolbar/Create.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_2">
+            <property name="minimumSize">
+             <size>
+              <width>134</width>
+              <height>45</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>154</width>
+              <height>45</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Удалить объект</string>
+            </property>
+            <property name="icon">
+             <iconset resource="resource.qrc">
+              <normaloff>:/resources/toolbar/Delete.ico</normaloff>:/resources/toolbar/Delete.ico</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
             </property>
            </widget>
           </item>
          </layout>
         </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <spacer name="horizontalSpacer_2">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;История событий&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTextEdit" name="logField"/>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QPushButton" name="clearBut">
+            <property name="minimumSize">
+             <size>
+              <width>154</width>
+              <height>45</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>154</width>
+              <height>45</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Очисить историю</string>
+            </property>
+            <property name="icon">
+             <iconset resource="resource.qrc">
+              <normaloff>:/resources/toolbar/clear-icon-3.png</normaloff>:/resources/toolbar/clear-icon-3.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+    <item row="0" column="1" colspan="2">
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="currentIndex">
+       <number>4</number>
+      </property>
+      <property name="tabsClosable">
+       <bool>false</bool>
+      </property>
+      <property name="movable">
+       <bool>false</bool>
+      </property>
+      <property name="tabBarAutoHide">
+       <bool>false</bool>
+      </property>
+      <widget class="QWidget" name="tab_4">
+       <attribute name="title">
+        <string>Режимы</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="0" column="0">
+         <widget class="QTableWidget" name="modeTable">
+          <column>
+           <property name="text">
+            <string>Код объекта</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Режим</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Создано</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Изменено</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Удалено</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Изменивший данные</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_6">
+       <attribute name="title">
+        <string>Местоположение</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="1" column="0">
+         <widget class="QTableView" name="tableView"/>
+        </item>
+        <item row="0" column="0">
+         <widget class="QTableWidget" name="coordinatTable">
+          <column>
+           <property name="text">
+            <string>Код объекта</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Координаты</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Направление</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Создано</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Изменено</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Удалено</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Изменивший данные</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>Маршруты</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="0" column="0">
+         <widget class="QTableWidget" name="routeTable">
+          <column>
+           <property name="text">
+            <string>Код объекта</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Номер позиции</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Координаты позиции</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Азимут заезда</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Время  занятия позиции</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Время оставления позиции</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_5">
+       <attribute name="title">
+        <string>Команды</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_5">
+        <item row="0" column="0">
+         <widget class="QTableWidget" name="commandTable">
+          <column>
+           <property name="text">
+            <string>Команда</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Время формирования</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Время исполнения</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QTableWidget" name="tableWidget">
+          <column>
+           <property name="text">
+            <string>Получатель</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Отметка</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Дата отметки</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_3">
+       <attribute name="title">
+        <string>Документы</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_6">
+        <item row="0" column="0">
+         <widget class="QTableWidget" name="documentTable">
+          <column>
+           <property name="text">
+            <string>Регистрационный номер</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Дата регистрации</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Тип документа</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Тема документа</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Источник информации</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QTableWidget" name="tableWidget_2">
+          <column>
+           <property name="text">
+            <string>Получатель</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Отметка</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Дата отметки</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <layout class="QVBoxLayout" name="verticalLayout_5">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <widget class="QPushButton" name="pushButton_3">
+          <property name="minimumSize">
+           <size>
+            <width>150</width>
+            <height>45</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>45</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Отправить данные</string>
+          </property>
+          <property name="icon">
+           <iconset resource="resource.qrc">
+            <normaloff>:/resources/toolbar/send.png</normaloff>:/resources/toolbar/send.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="updBut">
+          <property name="minimumSize">
+           <size>
+            <width>150</width>
+            <height>45</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>170</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Обновить информацию</string>
+          </property>
+          <property name="icon">
+           <iconset resource="resource.qrc">
+            <normaloff>:/resources/toolbar/refresh.png</normaloff>:/resources/toolbar/refresh.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -81,29 +559,37 @@
          </spacer>
         </item>
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <item>
-           <widget class="QPushButton" name="updBut">
-            <property name="text">
-             <string>обновить информацию</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="clearBut">
-            <property name="text">
-             <string>очистить историю</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         <widget class="QPushButton" name="exitButton">
+          <property name="minimumSize">
+           <size>
+            <width>134</width>
+            <height>45</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>170</width>
+            <height>45</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Выход</string>
+          </property>
+          <property name="icon">
+           <iconset resource="resource.qrc">
+            <normaloff>:/resources/toolbar/exit.png</normaloff>:/resources/toolbar/exit.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
      </layout>
-    </item>
-    <item row="1" column="1">
-     <widget class="QTextEdit" name="logField"/>
     </item>
    </layout>
   </widget>
@@ -112,54 +598,19 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>900</width>
+     <width>990</width>
      <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">
     <property name="title">
-     <string>меню</string>
+     <string>Меню</string>
     </property>
-    <widget class="QMenu" name="commandMenu">
-     <property name="title">
-      <string>Комманды/Сигналы</string>
-     </property>
-     <addaction name="showCommandTable"/>
-     <addaction name="sendCommand"/>
-    </widget>
-    <widget class="QMenu" name="routeMenu">
-     <property name="title">
-      <string>Маршруты</string>
-     </property>
-     <addaction name="showRouteTable"/>
-     <addaction name="sendRoute"/>
-    </widget>
-    <widget class="QMenu" name="documentMenu">
-     <property name="title">
-      <string>Документы</string>
-     </property>
-     <addaction name="showDocumentTable"/>
-     <addaction name="sendDocument"/>
-    </widget>
-    <widget class="QMenu" name="modeMenu">
-     <property name="title">
-      <string>режимы</string>
-     </property>
-     <addaction name="showModeTable"/>
-     <addaction name="sendMode"/>
-    </widget>
-    <widget class="QMenu" name="positionMenu">
-     <property name="title">
-      <string>местоположение</string>
-     </property>
-     <addaction name="showPositionTable"/>
-     <addaction name="sendPosition"/>
-    </widget>
-    <addaction name="commandMenu"/>
-    <addaction name="routeMenu"/>
-    <addaction name="documentMenu"/>
-    <addaction name="modeMenu"/>
-    <addaction name="positionMenu"/>
+    <addaction name="sendMode"/>
+    <addaction name="sendPosition"/>
+    <addaction name="sendRoute"/>
+    <addaction name="sendCommand"/>
+    <addaction name="sendDocument"/>
    </widget>
    <addaction name="menu"/>
   </widget>
@@ -170,7 +621,7 @@
   </action>
   <action name="sendCommand">
    <property name="text">
-    <string>отправить комманду</string>
+    <string>отправить команду</string>
    </property>
   </action>
   <action name="showRouteTable">
@@ -215,6 +666,8 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
  <connections/>
 </ui>

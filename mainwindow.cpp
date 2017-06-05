@@ -11,8 +11,8 @@ MainWindow::MainWindow(DbWorker dbConnect, QWidget *parent) :
     QPoint pos(X_POSITION_FRAME, Y_POSITION_FRAME);
     this->move(pos);
     ui->setupUi(this);
-    setWindowTitle("MBU");
-    makeLogNote("Start working");
+    setWindowTitle("Система управления");
+    makeLogNote("Начало работы");
 
     udpSocket.bind(LISTERNING_PORT);
     on_combObjTableBut_clicked();
@@ -20,6 +20,31 @@ MainWindow::MainWindow(DbWorker dbConnect, QWidget *parent) :
     setIp();
     targetIp.setAddress("192.168.1.42");
     connect(&udpSocket, SIGNAL(readyRead()), this, SLOT(readDatagram()));
+    ui->dateTimeEdit->setDateTime(QDateTime::currentDateTime());
+    for (int i=0; i < ui->commandTable->columnCount(); i++)
+    {
+        ui->commandTable->resizeColumnToContents(i);
+    }
+    for (int i=0; i < ui->modeTable->columnCount(); i++)
+    {
+        ui->modeTable->resizeColumnToContents(i);
+    }
+    for (int i=0; i < ui->coordinatTable->columnCount(); i++)
+    {
+        ui->coordinatTable->resizeColumnToContents(i);
+    }
+    for (int i=0; i < ui->routeTable->columnCount(); i++)
+    {
+        ui->routeTable->resizeColumnToContents(i);
+    }
+    for (int i=0; i < ui->documentTable->columnCount(); i++)
+    {
+        ui->documentTable->resizeColumnToContents(i);
+    }
+    for (int i=0; i < ui->objectTable->columnCount(); i++)
+    {
+        ui->objectTable->resizeColumnToContents(i);
+    }
 }
 
 MainWindow::~MainWindow()

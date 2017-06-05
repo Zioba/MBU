@@ -1,0 +1,21 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resources/toolbar/add.png</file>
+        <file>resources/toolbar/change_mode.png</file>
+        <file>resources/toolbar/changes.png</file>
+        <file>resources/toolbar/clear-icon-3.png</file>
+        <file>resources/toolbar/Create.png</file>
+        <file>resources/toolbar/Delete.ico</file>
+        <file>resources/toolbar/delete.png</file>
+        <file>resources/toolbar/edit.png</file>
+        <file>resources/toolbar/exit.png</file>
+        <file>resources/toolbar/history.png</file>
+        <file>resources/toolbar/map.png</file>
+        <file>resources/toolbar/navigator.png</file>
+        <file>resources/toolbar/refresh.png</file>
+        <file>resources/toolbar/reserve_title.png</file>
+        <file>resources/toolbar/save.png</file>
+        <file>resources/toolbar/send.png</file>
+        <file>resources/title.png</file>
+    </qresource>
+</RCC>

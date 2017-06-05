@@ -63,10 +63,12 @@ private:
     QHostAddress myIp;
     QHostAddress targetIp;
     Converter *converter;
+    QWidget *currentWidget;
 
     QString getCurrentDateAndTime();
     QString assistParser( QString, int & );
     QString makeDatagramCommand(QString q);
+    void fillTables();
 };
 
 #endif // MAINWINDOW_H
