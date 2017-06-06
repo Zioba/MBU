@@ -245,7 +245,44 @@ void MainWindow::on_sendRoute_triggered()
 
 void MainWindow::on_sendDocument_triggered()
 {
-
+    QString trash;
+    DelDialog dia;
+    if ( dia.exec() ) {
+        trash = dia.value();
+    }
+    QString data = makeDatagramDocument("1");
+    qDebug() << data;
+    if ( data == "error" ) {
+        makeLogNote( "ошибка создания датаграммы" );
+        QMessageBox::information(this, "ОШИБКА", "такой записи не существует!");
+        return;
+    }
+    QStringList list;
+    list << myIp.toString()
+         << targetIp.toString()
+         << "17"
+         << QString::number( data.length() + 224 )
+         << myPort
+         << targetPort
+         << QString::number( data.length() )
+         << ""
+         << "0001"
+         << QString::number( unicumMessageId )
+         << "1"
+         << "1"
+         << data;
+    unicumMessageId++;
+    QByteArray datagram = converter->encodeDatagram(list);
+    udpSocket.writeDatagram( datagram, targetIp, targetPort.toLong( Q_NULLPTR, 10) );
+    makeLogNote( "отправлен пакет" );
+    QMessageBox::information(this, "УСПЕХ", "Пакет отправлен успешно");
+    bool x = dbConnect.makeNote( 1, getCurrentDateAndTime(), 1, data, 2);
+    if ( x ) {
+        makeLogNote( "запись действия добавлена в БД" );
+    }
+        else {
+        makeLogNote( "ошиба записи действия в БД" );
+    }
 }
 
 void MainWindow::on_sendMode_triggered()
@@ -276,6 +313,26 @@ QString MainWindow::makeDatagramCommand( QString q )
     answer.append( "K1" );                       //Идентификатор приложения, которое  должно обрабатывать переданные данные.
     answer.append( "=" );                        //Признак начала передаваемых данных
     QString request = dbConnect.getCommandInformation(q);
+    if (request.compare("error") == 0) {
+        return "error";
+    }
+    else {
+        answer.append(request);
+    }
+    return answer;
+}
+
+QString MainWindow::makeDatagramDocument( QString q )
+{
+    QString answer = "";
+    answer.append( "1" );                        //метод сжатия
+    answer.append( converter->dobei( q, 6 ) );      //отправитель добить до 6
+    answer.append( converter->dobei( "mbu" , 6) );  //получатель
+    answer.append( "0" );                        //категория данных
+    answer.append( "X" );                        //данные о сообщении
+    answer.append( "D1" );                       //Идентификатор приложения, которое  должно обрабатывать переданные данные.
+    answer.append( "=" );                        //Признак начала передаваемых данных
+    QString request = dbConnect.getDocumentInformation(q);
     if (request.compare("error") == 0) {
         return "error";
     }

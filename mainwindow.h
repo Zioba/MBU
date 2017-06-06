@@ -64,6 +64,7 @@ private:
     QString assistParser( QString, int & );
     QString makeDatagramCommand(QString q);
     void resizeColumns(QTableWidget *table);
+    QString makeDatagramDocument(QString q);
 };
 
 #endif // MAINWINDOW_H

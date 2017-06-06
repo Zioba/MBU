@@ -132,6 +132,35 @@ QString DbWorker::getCommandInformation(QString object)
     return answer;
 }
 
+QString DbWorker::getDocumentInformation(QString object)
+{
+    QString answer = "";
+    QSqlQuery query= QSqlQuery(db);
+    QString s;
+    s =s+"SELECT cinf.outgoing_reg_number, cinf.outgoing_reg_datetime, ctyp.doctype_tid, cthm.doctheme_tid "+
+        "FROM combatdocs.combatdocs_info cinf JOIN combatdocs.combatdocs_type ctyp ON cinf.cmbdid = ctyp.cmbdid "+
+        "JOIN combatdocs.combatdocs_theme cthm ON cinf.cmbdid = cthm.cmbdid WHERE cinf.cmbdid='"+object+"';";
+    if ( !query.exec( s ) ) {
+        return "error";
+    }
+    else {
+        if ( query.size() == 0 ) return "error";
+        while ( query.next() ) {
+            answer.append( query.value( 0 ).toString() );
+            answer.append( ";" );
+            answer.append( query.value( 1 ).toString() );
+            answer.append( ";" );
+            answer.append( query.value( 2 ).toString() );
+            answer.append( ";" );
+            answer.append( query.value( 3 ).toString() );
+            answer.append( ";" );
+        }
+    }
+    //преобразование времени в нужный формат
+    answer.append( "\r" );
+    return answer;
+}
+
 QSqlDatabase DbWorker::getDb()
 {
     return this->db;
