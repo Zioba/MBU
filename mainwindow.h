@@ -14,6 +14,7 @@
 #include <QTableWidget>
 #include "converter.h"
 #include "dbworker.h"
+#include "utility.h"
 
 namespace Ui {
 class MainWindow;
@@ -64,6 +65,7 @@ private:
     QString assistParser( QString, int & );
     QString makeDatagramCommand(QString q);
     void resizeColumns(QTableWidget *table);
+    void resizeColumns(QTreeWidget *tree);
     QString makeDatagramDocument(QString q);
 };
 

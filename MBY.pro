@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     converter.cpp \
     parser.cpp \
     dbworker.cpp \
-    logic.cpp
+    logic.cpp \
+    utility.cpp
 
 HEADERS  += mainwindow.h\
     deldialog.h \
@@ -29,7 +30,8 @@ HEADERS  += mainwindow.h\
     parser.h \
     dbworker.h \
     udpserver.h \
-    logic.h
+    logic.h \
+    utility.h
 
 FORMS    += mainwindow.ui\
     deldialog.ui \
