@@ -33,7 +33,7 @@ MainWindow::MainWindow(DbWorker dbConnect, QWidget *parent) :
     udpSocket.bind(LISTERNING_PORT);
     converter = new Converter();
     setIp();
-    targetIp.setAddress("192.168.1.42");
+    targetIp.setAddress("192.168.1.95");
     connect(&udpSocket, SIGNAL(readyRead()), this, SLOT(readDatagram()));
     ui->dateTimeEdit->setDateTime(QDateTime::currentDateTime());
     on_updBut_clicked();
@@ -268,6 +268,7 @@ void MainWindow::on_sendCommand_triggered()
          << data;
     unicumMessageId++;
     QByteArray datagram = converter->encodeDatagram(list);
+    qDebug() << targetIp << targetPort.toLong( Q_NULLPTR, 10);
     udpSocket.writeDatagram( datagram, targetIp, targetPort.toLong( Q_NULLPTR, 10) );
     makeLogNote( "отправлен пакет" );
     QMessageBox::information(this, "УСПЕХ", "Пакет отправлен успешно");
